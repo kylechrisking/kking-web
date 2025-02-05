@@ -1,0 +1,17 @@
+portfolio/
+├── assets/
+│   ├── images/
+│   ├── fonts/
+│   └── icons/
+├── css/
+│   ├── main.css
+│   ├── animations.css
+│   └── responsive.css
+├── js/
+│   ├── main.js
+│   ├── cursor.js
+│   ├── particles.js
+│   └── animations.js
+├── ruby/
+│   └── server.rb
+└── index.html 
