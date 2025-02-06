@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.0.3] - 2024-03-19
+
+### Added
+- Modular JavaScript architecture with ES6 modules
+- Organized project structure with dedicated directories for assets, components, and modules
+- Separated CSS into modular components and base styles
+
+### Changed
+- Restructured JavaScript code into separate modules:
+  - cursor.js
+  - particles.js
+  - theme.js
+  - animations.js
+  - easter-eggs.js
+  - utils.js
+- Reorganized CSS into component-specific files
+- Improved code organization and maintainability
+
+### Improved
+- Better code separation and modularity
+- Enhanced maintainability and scalability
+- Cleaner project structure
+
 ## [1.0.2] - 2024-03-19
 
 ### Added

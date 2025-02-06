@@ -2,16 +2,31 @@ portfolio/
 ├── assets/
 │   ├── images/
 │   ├── fonts/
-│   └── icons/
+│   ├── icons/
+│   └── js/
+│       ├── modules/
+│       │   ├── cursor.js
+│       │   ├── particles.js
+│       │   ├── theme.js
+│       │   ├── animations.js
+│       │   ├── easter-eggs.js
+│       │   └── utils.js
+│       └── main.js
 ├── css/
+│   ├── components/
+│   │   ├── cursor.css
+│   │   ├── nav.css
+│   │   ├── hero.css
+│   │   ├── projects.css
+│   │   ├── about.css
+│   │   ├── resume.css
+│   │   ├── contact.css
+│   │   └── footer.css
+│   ├── base/
+│   │   ├── reset.css
+│   │   ├── variables.css
+│   │   ├── typography.css
+│   │   └── animations.css
 │   ├── main.css
-│   ├── animations.css
 │   └── responsive.css
-├── js/
-│   ├── main.js
-│   ├── cursor.js
-│   ├── particles.js
-│   └── animations.js
-├── ruby/
-│   └── server.rb
 └── index.html 
