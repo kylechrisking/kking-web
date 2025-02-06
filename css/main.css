@@ -1,9 +1,87 @@
 :root {
+    /* Dark theme (default) */
     --color-background: #0A0A0A;
     --color-text: #FFFFFF;
     --color-accent: #6B46C1;
     --color-accent-light: #9F7AEA;
+    --color-card-bg: rgba(107, 70, 193, 0.1);
+    --color-border: rgba(107, 70, 193, 0.2);
     --font-primary: 'Space Grotesk', sans-serif;
+}
+
+/* Light theme */
+[data-theme="light"] {
+    --color-background: #FFFFFF;
+    --color-text: #1A1A1A;
+    --color-accent: #6B46C1;
+    --color-accent-light: #805AD5;
+    --color-card-bg: rgba(107, 70, 193, 0.05);
+    --color-border: rgba(107, 70, 193, 0.15);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    color: var(--color-text);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:active {
+    transform: rotate(180deg);
+}
+
+.theme-toggle::after {
+    content: 'Try me!';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    background: var(--color-card-bg);
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    animation: fadeOutAfterDelay 5s forwards;
+}
+
+.theme-toggle:hover::after {
+    opacity: 0;
+}
+
+.theme-toggle .sun-icon,
+.theme-toggle .moon-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+.theme-toggle .sun-icon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.theme-toggle .moon-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+[data-theme="light"] .theme-toggle .sun-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+[data-theme="light"] .theme-toggle .moon-icon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg);
 }
 
 * {
@@ -19,6 +97,7 @@ body {
     font-family: var(--font-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Cursor */
@@ -30,7 +109,10 @@ body {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease-out;
+    transform-origin: center center;
+    animation: cursorPulse 2s ease infinite;
 }
 
 .cursor-inner {
@@ -41,7 +123,8 @@ body {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.15s ease-out;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease-out;
 }
 
 /* Navigation */
@@ -73,16 +156,17 @@ body {
     text-decoration: none;
     position: relative;
     padding: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--color-accent);
+    background: var(--color-accent);
     transition: width 0.3s ease;
 }
 
@@ -259,6 +343,9 @@ body {
     margin-bottom: 3rem;
     text-align: center;
     position: relative;
+    transition: width 0.3s ease;
+    animation: slideInFromBottom 0.8s ease forwards;
+    opacity: 0;
 }
 
 .section-title::after {
@@ -270,6 +357,22 @@ body {
     width: 100px;
     height: 3px;
     background: var(--color-accent);
+    transition: width 0.3s ease;
+}
+
+.section-title:hover::after {
+    width: 150px;
+}
+
+@keyframes slideInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .about-grid {
@@ -296,6 +399,14 @@ body {
 .skills-list li {
     position: relative;
     padding-left: 1.5rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+    opacity: 0;
+    animation: fadeInStagger 0.5s ease forwards;
+}
+
+.skills-list li:hover {
+    transform: translateX(5px);
+    color: var(--color-accent);
 }
 
 .skills-list li::before {
@@ -303,6 +414,28 @@ body {
     position: absolute;
     left: 0;
     color: var(--color-accent);
+    transition: transform 0.2s ease;
+}
+
+.skills-list li:hover::before {
+    transform: scale(1.2);
+}
+
+.skills-list li:nth-child(1) { animation-delay: 0.1s; }
+.skills-list li:nth-child(2) { animation-delay: 0.2s; }
+.skills-list li:nth-child(3) { animation-delay: 0.3s; }
+.skills-list li:nth-child(4) { animation-delay: 0.4s; }
+.skills-list li:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInStagger {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .about-cards {
@@ -358,15 +491,16 @@ body {
 }
 
 .project-card {
-    background: rgba(107, 70, 193, 0.1);
-    border-radius: 10px;
+    background: var(--color-card-bg);
+    border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease;
     position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(107, 70, 193, 0.2);
 }
 
 .project-image {
@@ -374,6 +508,7 @@ body {
     padding-top: 56.25%; /* 16:9 Aspect Ratio */
     overflow: hidden;
     background: rgba(107, 70, 193, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .project-image img {
@@ -383,7 +518,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
 .project-overlay {
@@ -392,20 +527,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(107, 70, 193, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
 }
 
 .project-card:hover .project-overlay {
     opacity: 1;
+    transform: translateY(0);
 }
 
 .project-card:hover .project-image img {
-    transform: scale(1.05);
+    transform: scale(1.1) rotate(2deg);
 }
 
 .project-links {
@@ -444,10 +581,17 @@ body {
 }
 
 .project-tech span {
-    background: rgba(107, 70, 193, 0.2);
-    padding: 0.25rem 0.75rem;
+    background: var(--color-card-bg);
+    padding: 0.2rem 0.8rem;
     border-radius: 15px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.project-card:hover .project-tech span {
+    transform: translateY(-2px);
+    background: var(--color-accent);
+    color: white;
 }
 
 /* Hidden Project Styles */
@@ -467,10 +611,21 @@ body {
     font-size: 3rem;
     color: var(--color-accent);
     opacity: 0.5;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .hidden-project:hover .project-placeholder span {
     animation: bounce 0.5s ease infinite alternate;
+    opacity: 0.8;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-10px);
+    }
 }
 
 /* Contact Section */
@@ -527,6 +682,27 @@ body {
     border: 1px solid var(--color-accent);
     border-radius: 25px;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--color-accent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: -1;
+}
+
+.social-link:hover::before {
+    width: 300%;
+    height: 300%;
 }
 
 .social-link:hover {
@@ -536,6 +712,12 @@ body {
 
 .social-icon {
     font-size: 1.2rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px) scale(1.1);
+    color: var(--color-accent);
 }
 
 /* Contact Form */
@@ -958,4 +1140,151 @@ body {
     background: var(--color-accent);
     border-radius: 3px;
     transition: width 1s ease-in-out;
+}
+
+.admin-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-accent);
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.admin-link:hover {
+    background: var(--color-accent);
+    color: white;
+}
+
+.copyright-text {
+    color: var(--color-text);
+    opacity: 0.7;
+    user-select: none;
+    -webkit-user-select: none; /* Safari support */
+    -moz-user-select: none; /* Firefox support */
+    -ms-user-select: none; /* IE/Edge support */
+}
+
+@keyframes fadeOutAfterDelay {
+    0%, 80% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Add a smooth page transition effect */
+.main-content {
+    opacity: 0;
+    animation: fadeInPage 1s ease forwards;
+}
+
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add hover effect for nav links */
+.nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-accent);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Add animation for social icons */
+.social-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px) scale(1.1);
+    color: var(--color-accent);
+}
+
+/* Add pulse animation for the cursor */
+@keyframes cursorPulse {
+    0% {
+        transform: scale(1) translate(-50%, -50%);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2) translate(-50%, -50%);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1) translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+.cursor-outer {
+    animation: cursorPulse 2s ease infinite;
+}
+
+/* Add typing animation for hero text */
+.hero-title {
+    position: relative;
+    display: inline-block;
+}
+
+.hero-title::after {
+    content: '|';
+    position: absolute;
+    right: -8px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Add scroll indicator animation */
+@keyframes scrollIndicator {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(10px);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollIndicator 2s ease-in-out infinite;
+    opacity: 0.7;
 } 

@@ -1,0 +1,10 @@
+# Prevent directory listing
+Options -Indexes
+
+# Require authentication for direct PHP file access
+<FilesMatch "\.php$">
+    # Allow only the index.php and api/* files to be accessed directly
+    <If "%{REQUEST_URI} !~ /(index\.php|api/.*)$">
+        Require all denied
+    </If>
+</FilesMatch> 

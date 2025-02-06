@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.1] - 2024-03-19
+
+### Added
+- Theme toggle animation with rotation effect
+- Smooth theme transition for background and text colors
+- "Try me!" tooltip for theme toggle button that fades after delay
+- Improved cursor tracking and centering
+- Page load fade-in animation
+- Section title hover effects
+- Skill item hover animations
+- Social icon hover effects
+- Navigation link hover animations
+
+### Fixed
+- Cursor tracking and positioning issues
+- Theme toggle button positioning
+- Copyright text selection prevention
+
 ## [1.0.0] - 2024-03-19
 
 ### Added

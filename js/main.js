@@ -225,4 +225,24 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.toggle('light-theme');
         });
     }
+
+    // Hidden admin button
+    const copyrightText = document.querySelector('.copyright-text');
+    let copyrightClicks = 0;
+    
+    if (copyrightText) {
+        copyrightText.addEventListener('click', () => {
+            copyrightClicks++;
+            if (copyrightClicks === 3) {
+                const adminLink = document.querySelector('.admin-link');
+                if (adminLink) {
+                    adminLink.style.display = 'inline';
+                    setTimeout(() => {
+                        adminLink.style.display = 'none';
+                        copyrightClicks = 0;
+                    }, 3000);
+                }
+            }
+        });
+    }
 }); 
