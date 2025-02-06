@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kyle King | Full Stack Developer</title>
+    <title>Kyle King | Portfolio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="manifest" href="assets/site.webmanifest">
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="css/main.css">
@@ -82,9 +89,18 @@
     <main>
         <!-- Hero Section -->
         <section id="home" class="hero">
+            <div class="crown-container">
+                <div class="crown hidden">
+                    👑
+                </div>
+            </div>
             <h1 class="glitch-text">Kyle King</h1>
             <h2 class="subtitle">IT Systems Engineer & Full Stack Developer</h2>
             <p class="tagline">Crafting <span class="highlight">innovative solutions</span> through code</p>
+            <div class="scroll-indicator hero-scroll">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow">↓</div>
+            </div>
         </section>
 
         <!-- About Section -->
@@ -121,8 +137,90 @@
                         </div>
                     </div>
                 </div>
+                <div class="character-panel">
+                    <div class="character-stats">
+                        <div class="stat-group class-info">
+                            <div class="class-title">Character Stats</div>
+                            <div class="stat-item level">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Level</span>
+                                    <span class="stat-value" data-value="24">0</span>
+                                </div>
+                            </div>
+                            <div class="specializations">
+                                <span class="spec-tag">Full Stack Engineer</span>
+                                <span class="spec-tag">Systems Engineer</span>
+                                <span class="spec-tag">Project Manager</span>
+                                <span class="spec-tag">Team Lead</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-group achievements">
+                            <div class="stat-item completion-rate" data-tooltip="Projects successfully completed and deployed">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Quest Completion</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-percentage="95"></div>
+                                        <div class="stat-detail">projects completed: 5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-item energy-stats" data-tooltip="Daily espresso consumption for optimal coding performance">
+                                <div class="stat-icon">☕</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Energy Source</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-percentage="75"></div>
+                                        <div class="stat-detail">3-4 cups/day</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-item" data-tooltip="Hours spent debugging and optimizing code">
+                                <div class="stat-icon">⚔️</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Debug Power</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-percentage="80"></div>
+                                        <div class="stat-detail">over 500 hours</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-item" data-tooltip="Ability to learn and adapt to new technologies">
+                                <div class="stat-icon">📚</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Learning Rate</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-percentage="90"></div>
+                                        <div class="stat-detail">advanced proficiency</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <!-- Add scroll indicator between About and Work sections -->
+        <div class="scroll-indicator-section">
+            <div class="scroll-indicator-wrapper">
+                <div class="scroll-indicator section-scroll">
+                    <span>More Below</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </div>
+        </div>
 
         <!-- Work Section -->
         <section id="work" class="work">
@@ -163,7 +261,7 @@
                         </div>
                         <div class="project-info">
                             <h3>Flutter</h3>
-                            <p>A Twitter clone built with Ruby on Rails, showcasing social media functionality and web development skills.</p>
+                            <p>[Senior Project]: A Twitter clone built with Ruby on Rails, showcasing social media functionality and web development skills.</p>
                             <div class="project-tech">
                                 <span>Ruby</span>
                                 <span>Rails</span>
@@ -214,15 +312,15 @@
                         </div>
                     </div>
 
-                    <!-- Hidden Project Card -->
+                    <!-- Update the Hidden Project Card -->
                     <div class="project-card hidden-project">
                         <div class="project-image">
                             <div class="project-placeholder">
-                                <span>?</span>
-                            </div>
-                            <div class="project-overlay">
-                                <p>More Coming Soon</p>
-                                <small>Stay tuned!</small>
+                                <span class="coming-soon-icon">✨</span>
+                                <div class="coming-soon-text">
+                                    <h3>More Coming Soon</h3>
+                                    <p>Stay tuned for future projects!</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -315,21 +413,71 @@
                             <div class="skill-category">
                                 <h4>Systems & Infrastructure</h4>
                                 <ul>
-                                    <li>AS400 / Unix AIX</li>
-                                    <li>VMware ESXi</li>
-                                    <li>Windows Server</li>
-                                    <li>Active Directory</li>
-                                    <li>Linux</li>
+                                    <li>
+                                        <span>AS400 / Unix AIX</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 50%"></div>
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <span>VMware ESXi</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 50%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span> Windows Server</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 75%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Active Directory</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 100%"></div>
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <span>Linux</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 90%"></div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="skill-category">
                                 <h4>Networking & Security</h4>
                                 <ul>
-                                    <li>TCP/IP</li>
-                                    <li>DNS / DHCP</li>
-                                    <li>VPN</li>
-                                    <li>Firewalls</li>
-                                    <li>Data Encryption</li>
+                                    <li>
+                                        <span>TCP/IP</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 90%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>DNS / DHCP</span>
+                                        <div class="skill-bar">
+
+                                            <div class="skill-progress" style="width: 90%"></div>
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <span>VPN</span>
+                                        <div class="skill-bar">
+
+                                            <div class="skill-progress" style="width: 95%"></div>
+                                         </div>
+                                    </li>
+                                    <li>
+                                        <span>Data Encryption</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 90%"></div>
+                                        </div>
+
+                                    </li>
                                 </ul>
                             </div>
                             <div class="skill-category">
@@ -338,7 +486,7 @@
                                     <li>
                                         <span>Ruby on Rails</span>
                                         <div class="skill-bar">
-                                            <div class="skill-progress" style="width: 90%"></div>
+                                            <div class="skill-progress" style="width: 40%"></div>
                                         </div>
                                     </li>
                                     <li>
@@ -356,17 +504,55 @@
                                     <li>
                                         <span>System Scripts</span>
                                         <div class="skill-bar">
-                                            <div class="skill-progress" style="width: 80%"></div>
+                                            <div class="skill-progress" style="width: 60%"></div>
                                         </div>
                                     </li>
                                     <li>
                                         <span>Documentation</span>
                                         <div class="skill-bar">
-                                            <div class="skill-progress" style="width: 85%"></div>
+                                            <div class="skill-progress" style="width: 100%"></div>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
+                            <div class="skill-category">
+                                <h4>Professional Skills</h4>
+                                <ul>
+                                    <li>
+                                        <span>Team Leadership</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 90%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Project Management</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 85%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Customer Relations</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 100%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Technical Training</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 95%"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Problem Solving</span>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 95%"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="skills-tooltip">
+                            <p><small>* Bars represent proficiency level from basic (25%) to expert (100%)</small></p>
                         </div>
                     </div>
 
@@ -486,7 +672,10 @@
                 <div class="footer-bottom">
                     <p class="copyright-text">&copy; 2024 Kyle King. All rights reserved.</p>
                     <a href="blog/admin/" class="admin-link" style="display: none;">Admin Panel</a>
-                    <p class="footer-easter-egg">Press 'K' to discover something special</p>
+                    <div class="footer-easter-eggs">
+                        <p class="footer-easter-egg">Press 'K' to discover something special</p>
+                        <p class="footer-easter-egg">Try typing 'king' for a royal surprise ✨</p>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -498,5 +687,6 @@
     <script src="js/particles.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/resume.js"></script>
+    <script src="js/easter-eggs.js"></script>
 </body>
 </html> 

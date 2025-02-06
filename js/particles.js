@@ -57,4 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     animate();
+
+    // Enhance particle system to react to mouse movement
+    canvas.addEventListener('mousemove', (e) => {
+        particles.forEach(particle => {
+            const dx = e.clientX - particle.x;
+            const dy = e.clientY - particle.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+                particle.vx += dx * 0.001;
+                particle.vy += dy * 0.001;
+            }
+        });
+    });
 }); 

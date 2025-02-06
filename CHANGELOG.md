@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.2] - 2024-03-19
+
+### Added
+- Second scroll indicator ("More Below") between About and Work sections
+- Custom favicon with "KK" logo in site's theme colors
+- Improved styling for "More Coming Soon" card in Featured Work section
+- Added site manifest for better PWA support
+
+### Changed
+- Fixed scroll indicator positioning and styling
+- Improved spacing between sections
+- Updated "Coming Soon" text styling with animation and better visual design
+- Optimized character stats animation timing
+
+### Fixed
+- Scroll indicator positioning issues
+- Progress bar text overlap
+- Favicon display issues
+- Spacing between character stats and work section
+
 ## [1.0.1] - 2024-03-19
 
 ### Added
