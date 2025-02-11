@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /includes/
+
+Sitemap: https://yourdomain.com/blog/sitemap.php 

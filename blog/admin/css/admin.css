@@ -1,0 +1,215 @@
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button.delete {
+    background: #e53e3e;
+}
+
+.posts-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.posts-table th,
+.posts-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.status-badge.draft {
+    background: rgba(107, 70, 193, 0.2);
+    color: var(--color-accent);
+}
+
+.status-badge.published {
+    background: rgba(72, 187, 120, 0.2);
+    color: #48bb78;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.inline {
+    display: inline;
+}
+
+/* Login page styles */
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    background: var(--color-card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-form h1 {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--color-text);
+}
+
+.error-message {
+    background: rgba(245, 101, 101, 0.2);
+    color: #f56565;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+/* Add these styles to the existing admin.css */
+
+.post-form {
+    background: var(--color-card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Style the SimpleMDE editor */
+.CodeMirror {
+    background: var(--color-background) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
+}
+
+.editor-toolbar {
+    background: var(--color-card-bg) !important;
+    border-color: var(--color-border) !important;
+}
+
+.editor-toolbar button {
+    color: var(--color-text) !important;
+}
+
+.editor-toolbar button:hover {
+    background: var(--color-border) !important;
+}
+
+.editor-toolbar.disabled-for-preview button:not(.no-disable) {
+    opacity: 0.5;
+}
+
+/* Add to existing admin.css */
+.current-image {
+    margin-top: 1rem;
+    max-width: 300px;
+}
+
+.current-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid var(--color-border);
+}
+
+.help-text {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+} 

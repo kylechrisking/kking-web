@@ -1,0 +1,12 @@
+# Ignore real database configuration
+includes/db.php
+
+# Ignore other sensitive files
+config.php
+.env
+
+# Ignore cache and uploads
+cache/*
+uploads/*
+!cache/.gitkeep
+!uploads/.gitkeep 

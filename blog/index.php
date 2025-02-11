@@ -1,61 +1,76 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/database.php';
-require_once '../includes/functions.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+try {
+    require_once 'includes/init.php';
+    echo "Init loaded<br>";
+    
+    require_once 'includes/header.php';
+    echo "Header loaded<br>";
+    
+    echo "Everything working!";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
 
 $db = new Database();
 
 // Pagination settings
-$postsPerPage = 5;
-$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-$offset = ($page - 1) * $postsPerPage;
+$per_page = 5;
+$current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$offset = ($current_page - 1) * $per_page;
 
-// Search and filter parameters
+// Get search and filter parameters
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $tag = isset($_GET['tag']) ? trim($_GET['tag']) : '';
 
-// Build query based on filters
-$where = ["status = 'published'"];
-$params = [];
-
-if ($search) {
-    $where[] = "(title LIKE ? OR content LIKE ?)";
-    $params[] = "%$search%";
-    $params[] = "%$search%";
-}
-
-if ($tag) {
-    $where[] = "EXISTS (
-        SELECT 1 FROM post_tags pt 
-        JOIN tags t ON pt.tag_id = t.id 
-        WHERE pt.post_id = p.id AND t.slug = ?
-    )";
-    $params[] = $tag;
-}
+// Build query conditions
+$query = buildSearchQuery($search, $tag);
+$where = $query['where'];
+$params = $query['params'];
 
 // Get total posts for pagination
-$totalQuery = "SELECT COUNT(DISTINCT p.id) as total FROM posts p";
+$total_query = "SELECT COUNT(DISTINCT p.id) as total FROM posts p";
 if (!empty($where)) {
-    $totalQuery .= " WHERE " . implode(" AND ", $where);
+    $total_query .= " WHERE " . implode(" AND ", $where);
 }
-$total = $db->query($totalQuery, $params)->fetch(PDO::FETCH_ASSOC)['total'];
-$totalPages = ceil($total / $postsPerPage);
+$stmt = $db->prepare($total_query);
+$stmt->execute($params);
+$total_posts = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-// Get posts
+// Get posts for current page
 $query = "
-    SELECT p.*, GROUP_CONCAT(t.name) as tag_list 
-    FROM posts p 
-    LEFT JOIN post_tags pt ON p.id = pt.post_id 
+    SELECT 
+        p.*,
+        GROUP_CONCAT(t.name) as tags,
+        GROUP_CONCAT(t.slug) as tag_slugs
+    FROM posts p
+    LEFT JOIN post_tags pt ON p.id = pt.post_id
     LEFT JOIN tags t ON pt.tag_id = t.id
 ";
 if (!empty($where)) {
     $query .= " WHERE " . implode(" AND ", $where);
 }
 $query .= " GROUP BY p.id ORDER BY p.created_at DESC LIMIT ? OFFSET ?";
-$params[] = $postsPerPage;
+$params[] = $per_page;
 $params[] = $offset;
 
-$posts = $db->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $db->prepare($query);
+$stmt->execute($params);
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get popular tags for tag cloud
+$popular_tags = $db->query("
+    SELECT t.name, t.slug, COUNT(*) as count 
+    FROM tags t 
+    JOIN post_tags pt ON t.id = pt.tag_id 
+    JOIN posts p ON pt.post_id = p.id 
+    WHERE p.status = 'published'
+    GROUP BY t.id 
+    ORDER BY count DESC 
+    LIMIT 10
+")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -113,16 +128,7 @@ $posts = $db->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
             <!-- Tags filter -->
             <div class="tags-filter">
                 <?php
-                $popularTags = $db->query("
-                    SELECT t.name, t.slug, COUNT(*) as count 
-                    FROM tags t 
-                    JOIN post_tags pt ON t.id = pt.tag_id 
-                    GROUP BY t.id 
-                    ORDER BY count DESC 
-                    LIMIT 10
-                ")->fetchAll(PDO::FETCH_ASSOC);
-                
-                foreach ($popularTags as $t): ?>
+                foreach ($popular_tags as $t): ?>
                     <a 
                         href="?tag=<?= urlencode($t['slug']) ?>" 
                         class="tag-link <?= $tag === $t['slug'] ? 'active' : '' ?>"
@@ -168,8 +174,11 @@ $posts = $db->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
                                 ?>
                             </div>
                             <div class="post-tags">
-                                <?php foreach (explode(',', $post['tag_list']) as $tag): ?>
-                                    <span class="post-tag"><?= trim(htmlspecialchars($tag)) ?></span>
+                                <?php foreach (explode(',', $post['tags']) as $i => $tag_name): ?>
+                                    <?php $tag_slug = explode(',', $post['tag_slugs'])[$i]; ?>
+                                    <a href="?tag=<?= urlencode($tag_slug) ?>" class="tag-link">
+                                        <?= htmlspecialchars($tag_name) ?>
+                                    </a>
                                 <?php endforeach; ?>
                             </div>
                             <a href="post.php?id=<?= $post['id'] ?>" class="read-more">
@@ -185,36 +194,29 @@ $posts = $db->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <!-- Pagination -->
-        <?php if ($totalPages > 1): ?>
+        <?php if ($total_posts > $per_page): ?>
             <nav class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?= $page - 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?><?= $tag ? '&tag=' . urlencode($tag) : '' ?>" class="prev-page">Previous</a>
+                <?php if ($current_page > 1): ?>
+                    <a href="?page=<?= $current_page - 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?><?= $tag ? '&tag=' . urlencode($tag) : '' ?>" class="prev-page">Previous</a>
                 <?php endif; ?>
                 
                 <div class="page-numbers">
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <?php if (
-                            $i == 1 || 
-                            $i == $totalPages || 
-                            ($i >= $page - 2 && $i <= $page + 2)
-                        ): ?>
-                            <a 
-                                href="?page=<?= $i ?><?= $search ? '&search=' . urlencode($search) : '' ?><?= $tag ? '&tag=' . urlencode($tag) : '' ?>" 
-                                class="page-number <?= $i === $page ? 'active' : '' ?>"
-                            >
-                                <?= $i ?>
-                            </a>
-                        <?php elseif (
-                            $i == 2 || 
-                            $i == $totalPages - 1
-                        ): ?>
+                    <?php foreach (paginate($total_posts, $per_page, $current_page) as $page): ?>
+                        <?php if ($page === '...'): ?>
                             <span class="page-ellipsis">...</span>
+                        <?php else: ?>
+                            <a 
+                                href="?page=<?= $page ?><?= $search ? '&search=' . urlencode($search) : '' ?><?= $tag ? '&tag=' . urlencode($tag) : '' ?>" 
+                                class="page-number <?= $page === $current_page ? 'active' : '' ?>"
+                            >
+                                <?= $page ?>
+                            </a>
                         <?php endif; ?>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </div>
                 
-                <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?= $page + 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?><?= $tag ? '&tag=' . urlencode($tag) : '' ?>" class="next-page">Next</a>
+                <?php if ($current_page < ceil($total_posts / $per_page)): ?>
+                    <a href="?page=<?= $current_page + 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?><?= $tag ? '&tag=' . urlencode($tag) : '' ?>" class="next-page">Next</a>
                 <?php endif; ?>
             </nav>
         <?php endif; ?>
@@ -230,4 +232,6 @@ $posts = $db->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
         });
     </script>
 </body>
-</html> 
+</html>
+
+<?php require_once 'includes/footer.php'; ?> 
