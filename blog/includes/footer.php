@@ -1,6 +1,8 @@
     </main>
-    <footer class="blog-footer">
-        <p>&copy; <?php echo date('Y'); ?> Kyle King. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <?= date('Y') ?> <?= SITE_TITLE ?>. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html> 

@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kyle King | Blog</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="assets/css/blog.css">
+    <title><?= SITE_TITLE ?></title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <header class="site-header">
+        <div class="container">
+            <h1><a href="<?= SITE_URL ?>"><?= SITE_TITLE ?></a></h1>
+        </div>
+    </header>
     <nav class="blog-nav">
         <div class="nav-content">
             <a href="/" class="logo">KK</a>
